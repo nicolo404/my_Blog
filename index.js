@@ -20,8 +20,6 @@ app.options('*',cors())
 app.use(express.urlencoded({extended:true})) // form-urlencoded
 //ruta con controlladores
 app.use('/api',routesArticle)
-
-
 // crear servidor y escuchar peticiones http
 app.listen(puerto, ()=>{
     console.log("Servidor corriendo en el puerto "+puerto);
