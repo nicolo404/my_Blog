@@ -5,7 +5,7 @@ const prueba = (req,res)=>{
         mensaje:"Soy una accion de prueba en mi controlador de articulos"
     })
 }
-const crear = (req, res)=>{
+const createArticle = (req, res)=>{
     // Recoger los parametros por post a guardar
     let parametros = req.body
     console.log(parametros)
@@ -23,24 +23,7 @@ const crear = (req, res)=>{
         })
     }
     // Crear un objeto a guardar
-    const articulo = new Articulo(parametros)
-    //asignar valores a objetos basados en el modelo(mnual o automatico)
-    // guardar articulo (objeto) en la base de datos
-    /*
-    articulo.save((error, articuloGuardado)=>{
-        if(error){
-            return restart.status(400).json({
-                status:"error",
-                mensaje:"no se ha guardado el articulo"
-            });
-        }
-        return res.status(200).json({
-            mensaje:"Success",
-            articulo:articuloGuardado,
-            mensaje: "articulo guardado con exito"
-        })
-    });
-    */
+    const articulo = new Articulo(parametros)   
     articulo.save()
     .then(function(savedArticle){
       console.log(savedArticle);
@@ -59,7 +42,7 @@ const crear = (req, res)=>{
     });
 }
 
-const Listar = (req,res)=>{
+const getAllArticle = (req,res)=>{
     
     
     Articulo.find({}).then((articulos)=>{
@@ -84,7 +67,7 @@ const Listar = (req,res)=>{
    
 }
 
-const uno = (req,res)=>{
+const getOneArticle = (req,res)=>{
     //recoger id por la url
     const {id} = req.params;
     console.log(id)
@@ -106,7 +89,7 @@ const uno = (req,res)=>{
     })  
 }
 
-const borrar = (req,res)=>{
+const deleteArticle = (req,res)=>{
     //recoger el id
     const {id}=req.params
     // buscar el id y eliminar
@@ -127,13 +110,37 @@ const borrar = (req,res)=>{
             status:"200",
             mensaje:"Articulo eliminado"
         })
-    })
+    })    
 }
+
+const updateArticle = (req, res)=>{
+    const {id} = req.params 
+    Articulo.findByIdAndUpdate(id,req.body, (error,articulo)=>{
+        if(error){
+            return res.status(200).json({
+                status:"400",
+                mensaje:"Error al actualizar articulo"
+            })
+        }
+        if(!articulo){
+            return res.status(404).json({
+                status:"404",
+                mensaje:"No existe el articulo"
+            })
+        }
+        return res.status(200).json({
+            status:"200",
+            mensaje:"Articulo actualizado"
+        })
+    }) 
+}
+
 
 module.exports = {
     prueba,
-    crear,
-    Listar,
-    uno,
-    borrar
+    createArticle,
+    getAllArticle,
+    getOneArticle,
+    deleteArticle,
+    updateArticle
 }
