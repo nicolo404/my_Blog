@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const routesArticle = require("./routes/articlesRoutes");
 const routesCategory = require("./routes/categoryRoutes");
-
 // app de node inicializada
 console.log("App de node arrancada");
 //conexion a la base de datos
