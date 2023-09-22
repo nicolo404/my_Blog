@@ -1,2 +1,0 @@
-# Configurar la conversión de saltos de línea para archivos con extensión .js
-*.js text eol=lf
