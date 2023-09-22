@@ -14,5 +14,4 @@ const categorySchema = Schema({
     ref: "article",
   },
 });
-
 module.exports = model("category", categorySchema);
