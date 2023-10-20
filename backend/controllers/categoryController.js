@@ -1,5 +1,6 @@
 const Category = require("../models/Category");
 const validator = require("validator");
+
 const createCategory = (req, res) => {
   // Recoger los parametros por post a guardar
   let parametros = req.body;
@@ -36,6 +37,56 @@ const createCategory = (req, res) => {
     });
 };
 
+const getCategory = (req, res) => {
+  Category.find({})
+    .then((category) => {
+      if (!category) {
+        return res.status(404).json({
+          status: "error",
+          mensaje: "No se han encontrado categorias",
+        });
+      }
+      return res.status(200).send({
+        status: "success",
+        category,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).json({
+        status: "error",
+        mensaje: "Ha ocurrido un error al listar los articulos",
+        error: error,
+      });
+    });
+};
+
+const deleteCategory = (req, res) => {
+  //recoger el id
+  const { id } = req.params;
+  // buscar el id y eliminar
+  Category.findByIdAndDelete(id, (error, category) => {
+    if (error) {
+      return res.status(200).json({
+        status: "400",
+        mensaje: "Error al eliminar la categoria",
+      });
+    }
+    if (!category) {
+      return res.status(404).json({
+        status: "404",
+        mensaje: "No existe la categoria",
+      });
+    }
+    return res.status(200).json({
+      status: "200",
+      mensaje: "Categoria eliminada",
+    });
+  });
+};
+
 module.exports = {
   createCategory,
+  getCategory,
+  deleteCategory,
 };
