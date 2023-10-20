@@ -63,7 +63,7 @@ const getCategory = (req, res) => {
 
 const deleteCategory = (req, res) => {
   //recoger el id
-  const { id } = req.params;
+  const id = req.params;
   // buscar el id y eliminar
   Category.findByIdAndDelete(id, (error, category) => {
     if (error) {
