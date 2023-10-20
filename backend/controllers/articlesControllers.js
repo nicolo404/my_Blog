@@ -98,6 +98,7 @@ const deleteArticle = (req, res) => {
         mensaje: "Error al eliminar articulo",
       });
     }
+
     if (!articulo) {
       return res.status(404).json({
         status: "404",
